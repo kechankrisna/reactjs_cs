@@ -1,46 +1,121 @@
-# Getting Started with Create React App
+### [x] create-react app
+	- npx create-react-app sample
+	- npx create-react-app sample_type --template typescript
+	- yarn create react-app sample_type --template typescript
+### [ ] state management
+	- function component (stateless) 
+    	- can use useState() [value, setValue] as [currentStateValue, setStateValue]
+    	- Ref: https://react.dev/reference/react/useState
+    	- Ex: ```js
+			function CounterApp(props: CounterAppType) => {
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+			const [value, setValue] = useState(props.initialValue ?? 0);
 
-## Available Scripts
+			var increase = () => {
+				setValue(value + 1);
+				Logger.d(this);
+			}
 
-In the project directory, you can run:
+			var decrease = () => {
+				setValue(value - 1);
+				Logger.d(this);
+			}
 
-### `yarn start`
+			// Similar to componentDidMount and componentDidUpdate:
+			useEffect(() => {
+				// Update the document title using the browser API
+				document.title = `You clicked ${value} times`;
+			});
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+		return (
+					<div>
+					Value is {value}
+					<button onClick={decrease}>decrease</button>
+					<button onClick={increase}>increase</button>
+				</div>
+				)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+		}
+		```
+	- class component (stateful)
+    	- can use state and setState
+    	- Ref: https://react.dev/reference/react/Component#setstate
+      	- Ex: ```js
+			class CounterApp extends React.Component<CounterAppType> {
 
-### `yarn test`
+				state = {
+					value: this.props.initialValue ?? 0,
+				};
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+				componentDidMount(): void {
+					document.title = `You clicked ${this.state.value} times`;
+				}
 
-### `yarn build`
+				componentDidUpdate(prevProps: Readonly<CounterAppType>, prevState: Readonly<{}>, snapshot?: any): void {
+					document.title = `You clicked ${this.state.value} times`;
+				}
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+				increase = () => {
+					this.setState({ value: this.state.value + 1 })
+					Logger.d(this);
+				}
+				decrease = () => {
+					this.setState({ value: this.state.value - 1 })
+					Logger.d(this);
+				}
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+				render(): React.ReactNode {
+					return (
+						<div>
+							Value is {this.state.value}
+							<button onClick={this.decrease}>decrease</button>
+							<button onClick={this.increase}>increase</button>
+						</div>
+					);
+				}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+			}
+			```
+	- createContext and useContext
+    	- avoid nested props from parent to child/childen
+    	- Ref: https://react.dev/reference/react/useContext
+    	- Eg: ```js
 
-### `yarn eject`
+    		```
+### [ ] using route
+	- pre-defind route by path and name
+	- react-router-dom (for web)
+	- react-route-native (for native)
+	- v5 compare: https://v5.reactrouter.com/native/guides/quick-start
+	- v6 https://reactrouter.com/en/main/router-components/native-router
+	- pre-defind name route: https://reactrouter.com/en/main/start/overview
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### [ ] using fetch and axios
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### [ ] dom api
+	- dialog
+	- console
+	- 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### [x] architecture app
+	- The "assets" folder holds static files like logos, fonts, and images.
+	- The "components" folder contains UI codes, like buttons and forms.
+    	+ inside input_component directory
+      	- "Input.js"- This file usually contains all the functionalities and logic that are to be required for the custom input component.
+      	- "Input.css"- This file contains rules related explicitly to styling input components
+      	- "Input.test.js"- This file contains the test cases that ensure all components behave as expected.
+	- The "views" folder has web images.
+	- The "service" folder contains code for communicating with external APIs.
+	- The "utils" folder simplifies reusable snippet functions.
+	- The " hooks" folder contains reusable code and new component logic.
+	- The "store" folder holds state management like Redux.
+	- The "App.js" folder serves as the primary component of the application.
+	- "Index.js" The React app entry point starts here.
+	- "Index.css" is the application’s global sheet style for styled-components.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+[ ] testing both javascript and typescript
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+[ ] pre-defind ui react framework
+	- for admin panel: https://github.com/marmelab/react-admin
+	- for native to web support: https://github.com/necolas/react-native-web
+	- ui/ux framework: https://ant.design/docs/react/introduce
